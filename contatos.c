@@ -26,6 +26,20 @@ int validar_numero(char numero[]) {
   return 1;
 }
 
+ERROS criar(Contato contatos[], int *pos) {
+    if (*pos >= TOTAL)
+        return MAX_CONTATOS;
+
+
+int validar_numero(char numero[]) {
+  for (int i = 0; numero[i] != '\0'; i++) {
+    if (!(numero[i] >= '0' && numero[i] <= '9')) {
+      return 0;
+    }
+  }
+  return 1;
+}
+
 ERROS criar(Contato contatos_pessoais[], Contato contatos_trabalho[],int *pos_pessoais, int *pos_trabalho) {
 
   if (*pos_pessoais >= TOTAL || *pos_trabalho >= TOTAL)

@@ -16,6 +16,11 @@ int validar_numero(char numero[]);
 ERROS criar(Contato contatos_pessoais[], Contato contatos_trabalho[], int *pos_pessoais, int *pos_trabalho);
 ERROS deletar(Contato contatos_pessoais[], Contato contatos_trabalho[], int *pos_pessoais, int *pos_trabalho);
 ERROS listar(Contato contatos_pessoais[], Contato contatos_trabalho[], int *pos_pessoais, int *pos_trabalho);
+
+ERROS criar(Contato contatos[], int *pos);
+ERROS deletar(Contato contatos[], int *pos);
+ERROS listar(Contato contatos[], int *pos);
+
 ERROS salvar(Contato contatos[], int *pos);
 ERROS carregar(Contato contatos[], int *pos);
 
