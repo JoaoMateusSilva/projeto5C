@@ -3,7 +3,7 @@
 #include <string.h>
 
 int main() {
-  funcao fs[] = {criar, deletar, listar, salvar, carregar};
+  funcao fs[] = {criar, deletar, listar, alterar, salvar, carregar};
 
   Contato contatos_pessoais[TOTAL];
   int pos_pessoais = 0;
@@ -11,7 +11,7 @@ int main() {
   Contato contatos_trabalho[TOTAL];
   int pos_trabalho = 0;
 
-ERROS erro = fs[4](contatos, &pos);
+  ERROS erro = fs[4](contatos, &pos);
     if(erro != OK){
       if(erro == ABRIR){
         printf("erro ao abrir o arquivo\n");
@@ -29,11 +29,14 @@ ERROS erro = fs[4](contatos, &pos);
 
    int opcao;
   
+  int opcao;
+  
   do {
     printf("\nMenu principal\n");
     printf("1 - Criar contato\n");
     printf("2 - Deletar contato\n");
     printf("3 - Listar contatos\n");
+    printf("4 - Alterar dados do contato\n");
     printf("0 - Sair\n");
     printf("Entre com uma opcao: ");
 
@@ -44,14 +47,14 @@ ERROS erro = fs[4](contatos, &pos);
     if (opcao == 1) {
       erro = criar(contatos_pessoais, contatos_trabalho, &pos_pessoais, &pos_trabalho);
       if (erro == MAX_CONTATOS) {
-        printf("Máximo de contatos alcançado\n");
+          printf("Máximo de contatos alcançado\n");
       } else if (erro == TIPO_INVALIDO) {
           printf("Número inválido\n");
       }
     } else if (opcao == 2) {
       erro = deletar(contatos_pessoais, contatos_trabalho, &pos_pessoais, &pos_trabalho);
       if (erro == SEM_CONTATOS) {
-          printf("Sem contatos para deletar\n");
+        printf("Sem contatos para deletar\n");
       } else if (erro == NAO_ENCONTRADO) {
           printf("Esse contato não existe\n");
       }
@@ -59,6 +62,13 @@ ERROS erro = fs[4](contatos, &pos);
       erro = listar(contatos_pessoais, contatos_trabalho, &pos_pessoais, &pos_trabalho);
       if (erro == SEM_CONTATOS) {
         printf("Sem contatos para listar\n");
+      }
+    } else if (opcao == 4) {
+      erro = alterar(contatos_pessoais, contatos_trabalho, &pos_pessoais, &pos_trabalho);
+      if (erro == SEM_CONTATOS) {
+          printf("Sem contatos para alterar\n");
+      } else if (erro == NAO_ENCONTRADO) {
+          printf("Esse contato não existe\n");
       }
     } else if (opcao == 0) {
         printf("Sair. . .\n");
