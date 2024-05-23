@@ -69,12 +69,4 @@ ERROS erro = fs[4](contatos, &pos);
       printf("opcao invalida");
     }
   } while (opcao != 0);
-
-  ERROS errosalvar = fs[3](contatos, &pos);
-    if(erro == ABRIR)
-      printf("erro ao abrir o arquivo\n");
-    else if(erro == FECHAR)
-      printf("erro ao fechar o arquivo\n");
-    else if(erro == ESCREVER)
-      printf("erro ao escrever no arquivo\n");
 }
