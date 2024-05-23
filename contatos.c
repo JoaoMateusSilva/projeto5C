@@ -1,6 +1,6 @@
+#include "contatos.h"
 #include <stdio.h>
 #include <string.h>
-#include "contatos.h"
 
 int validar_email(char email[]) {
   int i, at = 0, dot = 0;
@@ -16,20 +16,6 @@ int validar_email(char email[]) {
   else
     return 0;
 }
-
-int validar_numero(char numero[]) {
-  for (int i = 0; numero[i] != '\0'; i++) {
-    if (!(numero[i] >= '0' && numero[i] <= '9')) {
-      return 0;
-    }
-  }
-  return 1;
-}
-
-ERROS criar(Contato contatos[], int *pos) {
-    if (*pos >= TOTAL)
-        return MAX_CONTATOS;
-
 
 int validar_numero(char numero[]) {
   for (int i = 0; numero[i] != '\0'; i++) {
@@ -77,7 +63,8 @@ ERROS criar(Contato contatos_pessoais[], Contato contatos_trabalho[],int *pos_pe
 
     printf("Entre com o numero do contato de trabalho (até 11 digitos): ");
     fgets(contatos_trabalho[*pos_trabalho].numero, 11, stdin);
-    contatos_trabalho[*pos_trabalho].numero[strcspn(contatos_trabalho[*pos_trabalho].numero, "\n")] = '\0';
+    contatos_trabalho[*pos_trabalho]
+        .numero[strcspn(contatos_trabalho[*pos_trabalho].numero, "\n")] = '\0';
     do {
       printf("Entre com o email do contato de trabalho: ");
       fgets(contatos_trabalho[*pos_trabalho].email, 100, stdin);
@@ -89,12 +76,14 @@ ERROS criar(Contato contatos_pessoais[], Contato contatos_trabalho[],int *pos_pe
     return TIPO_INVALIDO;
   }
   for (int i = 0; i < *pos_pessoais; i++) {
-    if (strcmp(contatos_pessoais[i].numero, contatos_pessoais[*pos_pessoais - 1].numero) == 0) {
+    if (strcmp(contatos_pessoais[i].numero,
+               contatos_pessoais[*pos_pessoais - 1].numero) == 0) {
       return NUMERO_EXISTENTE;
     }
   }
   for (int i = 0; i < *pos_trabalho; i++) {
-    if (strcmp(contatos_trabalho[i].numero, contatos_pessoais[*pos_pessoais - 1].numero) == 0) {
+    if (strcmp(contatos_trabalho[i].numero,
+               contatos_pessoais[*pos_pessoais - 1].numero) == 0) {
       return NUMERO_EXISTENTE;
     }
   }
@@ -152,6 +141,82 @@ ERROS listar(Contato contatos_pessoais[], Contato contatos_trabalho[],int *pos_p
     printf("Email: %s\n", contatos_trabalho[i].email);
   }
   return OK;
+}
+
+ERROS alterar(Contato contatos_pessoais[], Contato contatos_trabalho[], int *pos_pessoais, int *pos_trabalho) {
+  char numero_alterar[11];
+
+  printf("Entre com o numero do contato a ser alterado: ");
+  fgets(numero_alterar, 11, stdin);
+  numero_alterar[strcspn(numero_alterar, "\n")] = '\0';
+
+  char tipo_contato[10];
+
+  printf("Entre com o tipo do contato a ser alterado (pessoal ou trabalho): ");
+  fgets(tipo_contato, 10, stdin);
+  tipo_contato[strcspn(tipo_contato, "\n")] = '\0';
+
+  if (strcmp(tipo_contato, "pessoal") == 0) {
+    
+    for (int i = 0; i < *pos_pessoais; i++) {
+      
+      if (strcmp(contatos_pessoais[i].numero, numero_alterar) == 0) {
+        printf("Entre com o novo nome do contato pessoal: ");
+        fgets(contatos_pessoais[i].nome, 100, stdin);
+        contatos_pessoais[i].nome[strcspn(contatos_pessoais[i].nome, "\n")] = '\0';
+        
+        do {
+          printf("Entre com o novo numero do contato pessoal (até 11 digitos): ");
+          fgets(contatos_pessoais[i].numero, 11, stdin);
+          contatos_pessoais[i].numero[strcspn(contatos_pessoais[i].numero, "\n")] = '\0';
+        } while (!validar_numero(contatos_pessoais[i].numero));
+        do {
+          printf("Entre com o novo email do contato pessoal: ");
+          fgets(contatos_pessoais[i].email, 100, stdin);
+          contatos_pessoais[i].email[strcspn(contatos_pessoais[i].email, "\n")] = '\0';
+        } while (!validar_email(contatos_pessoais[i].email));
+        return OK;
+      }
+    }
+  } else if (strcmp(tipo_contato, "trabalho") == 0) {
+    for (int i = 0; i < *pos_trabalho; i++) {
+      if (strcmp(contatos_trabalho[i].numero, numero_alterar) == 0) {
+
+        printf("Entre com o novo nome do contato de trabalho: ");
+        fgets(contatos_trabalho[i].nome, 100, stdin);
+        contatos_trabalho[i].nome[strcspn(contatos_trabalho[i].nome, "\n")] = '\0';
+
+        do {
+
+          printf("Entre com o novo numero do contato de trabalho (até 11 digitos): ");
+          fgets(contatos_trabalho[i].numero, 11, stdin);
+          contatos_trabalho[i].numero[strcspn(contatos_trabalho[i].numero, "\n")] = '\0';
+
+        } while (!validar_numero(contatos_trabalho[i].numero));
+        do {
+
+          printf("Entre com o novo email do contato de trabalho: ");
+          fgets(contatos_trabalho[i].email, 100, stdin);
+          contatos_trabalho[i].email[strcspn(contatos_trabalho[i].email, "\n")] = '\0';
+
+        } while (!validar_email(contatos_trabalho[i].email));
+        return OK;
+      }
+    }
+      for (int i = 0; i < *pos_pessoais; i++) {
+          if (strcmp(contatos_pessoais[i].numero, numero_alterar) == 0) {
+              return NUMERO_EXISTENTE;
+          }
+      }
+      for (int i = 0; i < *pos_trabalho; i++) {
+          if (strcmp(contatos_trabalho[i].numero, numero_alterar) == 0) {
+              return NUMERO_EXISTENTE;
+          }
+      }
+  } else {
+    return TIPO_INVALIDO;
+  }
+  return NAO_ENCONTRADO;
 }
 
 ERROS salvar (Contato contatos[], int *pos) {
