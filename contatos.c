@@ -2,6 +2,30 @@
 #include <string.h>
 #include "contatos.h"
 
+int validar_email(char email[]) {
+  int i, at = 0, dot = 0;
+  for (i = 0; email[i] != '\0'; i++) {
+    if (email[i] == '@') {
+      at++;
+    } else if (email[i] == '.') {
+      dot++;
+    }
+  }
+  if (at == 1 && dot >= 1)
+    return 1;
+  else
+    return 0;
+}
+
+int validar_numero(char numero[]) {
+  for (int i = 0; numero[i] != '\0'; i++) {
+    if (!(numero[i] >= '0' && numero[i] <= '9')) {
+      return 0;
+    }
+  }
+  return 1;
+}
+
 ERROS criar(Contato contatos[], int *pos) {
     if (*pos >= TOTAL)
         return MAX_CONTATOS;
