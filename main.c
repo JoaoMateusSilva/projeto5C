@@ -11,24 +11,23 @@ int main() {
   Contato contatos_trabalho[TOTAL];
   int pos_trabalho = 0;
 
-  ERROS erro = fs[4](contatos, &pos);
-    if(erro != OK){
-      if(erro == ABRIR){
-        printf("erro ao abrir o arquivo\n");
-        pos = 0;
-      } 
-      else if(erro == FECHAR){
-        printf("erro ao fechar o arquivo\n");
-        pos = 0;
-      }
-      else if(erro == LER){
-        printf("erro ao ler no arquivo\n");
-        pos = 0;
-      }
+  ERROS erro = carregar(contatos_pessoais, contatos_trabalho, &pos_pessoais, &pos_trabalho);
+  if (erro != OK) {
+    if (erro == ABRIR) {
+      printf("Erro ao abrir o arquivo\n");
+      pos_pessoais = 0;
+      pos_trabalho = 0;
+    } else if (erro == FECHAR) {
+      printf("Erro ao fechar o arquivo\n");
+      pos_pessoais = 0;
+      pos_trabalho = 0;
+    } else if (erro == LER) {
+      printf("Erro ao ler no arquivo\n");
+      pos_pessoais = 0;
+      pos_trabalho = 0;
+    }
   }
 
-   int opcao;
-  
   int opcao;
   
   do {
@@ -47,16 +46,16 @@ int main() {
     if (opcao == 1) {
       erro = criar(contatos_pessoais, contatos_trabalho, &pos_pessoais, &pos_trabalho);
       if (erro == MAX_CONTATOS) {
-          printf("Máximo de contatos alcançado\n");
+        printf("Máximo de contatos alcançado\n");
       } else if (erro == TIPO_INVALIDO) {
-          printf("Número inválido\n");
+        printf("Número inválido\n");
       }
     } else if (opcao == 2) {
       erro = deletar(contatos_pessoais, contatos_trabalho, &pos_pessoais, &pos_trabalho);
       if (erro == SEM_CONTATOS) {
         printf("Sem contatos para deletar\n");
       } else if (erro == NAO_ENCONTRADO) {
-          printf("Esse contato não existe\n");
+        printf("Esse contato não existe\n");
       }
     } else if (opcao == 3) {
       erro = listar(contatos_pessoais, contatos_trabalho, &pos_pessoais, &pos_trabalho);
@@ -66,21 +65,22 @@ int main() {
     } else if (opcao == 4) {
       erro = alterar(contatos_pessoais, contatos_trabalho, &pos_pessoais, &pos_trabalho);
       if (erro == SEM_CONTATOS) {
-          printf("Sem contatos para alterar\n");
+        printf("Sem contatos para alterar\n");
       } else if (erro == NAO_ENCONTRADO) {
-          printf("Esse contato não existe\n");
+        printf("Esse contato não existe\n");
       }
     } else if (opcao == 0) {
-        printf("Sair. . .\n");
-      erro = salvar(contatos, &pos);
-      if(erro == ABRIR)
-        printf("erro ao abrir o arquivo\n");
-      else if(erro == FECHAR)
-        printf("erro ao fechar o arquivo\n");
-      else if(erro == ESCREVER)
-        printf("erro ao escrever no arquivo\n");
-  } else {
-      printf("opcao invalida");
+      printf("Saindo...\n");
+      erro = salvar(contatos_pessoais, contatos_trabalho, &pos_pessoais, &pos_trabalho);
+      if (erro == ABRIR) {
+        printf("Erro ao abrir o arquivo\n");
+      } else if (erro == FECHAR) {
+        printf("Erro ao fechar o arquivo\n");
+      } else if (erro == ESCREVER) {
+        printf("Erro ao escrever no arquivo\n");
+      }
+    } else {
+      printf("Opcao invalida\n");
     }
   } while (opcao != 0);
 }

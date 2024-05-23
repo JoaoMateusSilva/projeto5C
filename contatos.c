@@ -219,35 +219,29 @@ ERROS alterar(Contato contatos_pessoais[], Contato contatos_trabalho[], int *pos
   return NAO_ENCONTRADO;
 }
 
-ERROS salvar (Contato contatos[], int *pos) {
+ERROS salvar(Contato contatos_pessoais[], Contato contatos_trabalho[], int *pos_pessoais, int *pos_trabalho) {
     FILE *f = fopen("contatos.bin", "wb");
     if (f == NULL)
         return ABRIR;
-
-    int qtd = fwrite(contatos, TOTAL, sizeof(Contato), f);
+    int qtd = fwrite(contatos_pessoais, *pos_pessoais, sizeof(Contato), f); 
     if (qtd == 0)
         return ESCREVER;
-
-    qtd = fwrite(pos, 1, sizeof(int), f);
+    qtd = fwrite(contatos_trabalho, *pos_trabalho, sizeof(Contato), f); 
     if (qtd == 0)
         return ESCREVER;
-
     if (fclose(f))
         return FECHAR;
-
     return OK;
-
 }
-
-ERROS carregar(Contato contatos[], int *pos) {
+ERROS carregar(Contato contatos_pessoais[], Contato contatos_trabalho[], int *pos_pessoais, int *pos_trabalho) {
     FILE *f = fopen("contatos.bin", "rb");
     if (f == NULL)
         return ABRIR;
-    int qtd = fread(contatos, TOTAL, sizeof(Contato), f);
+
+    int qtd = fread(contatos_pessoais, *pos_pessoais, sizeof(Contato), f); 
     if (qtd == 0)
         return LER;
-    qtd = fread(pos, 1, sizeof(int), f);
-    if (qtd == 0)
+    qtd = fread(contatos_trabalho, *pos_trabalho, sizeof(Contato), f); 
         return LER;
     if (fclose(f))
         return FECHAR;
