@@ -3,8 +3,6 @@
 #include <string.h>
 
 int main() {
-  funcao fs[] = {criar, deletar, listar, alterar, salvar, carregar};
-
   Contato contatos_pessoais[TOTAL];
   int pos_pessoais = 0;
 
@@ -48,7 +46,7 @@ int main() {
       if (erro == MAX_CONTATOS) {
         printf("Máximo de contatos alcançado\n");
       } else if (erro == TIPO_INVALIDO) {
-        printf("Número inválido\n");
+        printf("Número ou email inválido\n");
       }
     } else if (opcao == 2) {
       erro = deletar(contatos_pessoais, contatos_trabalho, &pos_pessoais, &pos_trabalho);
