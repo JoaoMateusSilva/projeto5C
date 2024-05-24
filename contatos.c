@@ -26,7 +26,8 @@ int validar_numero(char numero[]) {
   return 1;
 }
 
-ERROS criar(Contato contatos_pessoais[], Contato contatos_trabalho[],int *pos_pessoais, int *pos_trabalho) {
+ERROS criar(Contato contatos_pessoais[], Contato contatos_trabalho[],
+            int *pos_pessoais, int *pos_trabalho) {
 
   if (*pos_pessoais >= TOTAL || *pos_trabalho >= TOTAL)
     return MAX_CONTATOS;
@@ -41,17 +42,20 @@ ERROS criar(Contato contatos_pessoais[], Contato contatos_trabalho[],int *pos_pe
 
     printf("Entre com o nome do contato pessoal: ");
     fgets(contatos_pessoais[*pos_pessoais].nome, 100, stdin);
-    contatos_pessoais[*pos_pessoais].nome[strcspn(contatos_pessoais[*pos_pessoais].nome, "\n")] = '\0';
+    contatos_pessoais[*pos_pessoais]
+        .nome[strcspn(contatos_pessoais[*pos_pessoais].nome, "\n")] = '\0';
 
     printf("Entre com o numero do contato pessoal (até 11 digitos): ");
     fgets(contatos_pessoais[*pos_pessoais].numero, 11, stdin);
-    contatos_pessoais[*pos_pessoais].numero[strcspn(contatos_pessoais[*pos_pessoais].numero, "\n")] = '\0';
+    contatos_pessoais[*pos_pessoais]
+        .numero[strcspn(contatos_pessoais[*pos_pessoais].numero, "\n")] = '\0';
 
     do {
 
       printf("Entre com o email do contato pessoal: ");
       fgets(contatos_pessoais[*pos_pessoais].email, 100, stdin);
-      contatos_pessoais[*pos_pessoais].email[strcspn(contatos_pessoais[*pos_pessoais].email, "\n")] = '\0';
+      contatos_pessoais[*pos_pessoais]
+          .email[strcspn(contatos_pessoais[*pos_pessoais].email, "\n")] = '\0';
 
     } while (!validar_email(contatos_pessoais[*pos_pessoais].email));
     (*pos_pessoais)++;
@@ -59,7 +63,8 @@ ERROS criar(Contato contatos_pessoais[], Contato contatos_trabalho[],int *pos_pe
 
     printf("Entre com o nome do contato de trabalho: ");
     fgets(contatos_trabalho[*pos_trabalho].nome, 100, stdin);
-    contatos_trabalho[*pos_trabalho].nome[strcspn(contatos_trabalho[*pos_trabalho].nome, "\n")] = '\0';
+    contatos_trabalho[*pos_trabalho]
+        .nome[strcspn(contatos_trabalho[*pos_trabalho].nome, "\n")] = '\0';
 
     printf("Entre com o numero do contato de trabalho (até 11 digitos): ");
     fgets(contatos_trabalho[*pos_trabalho].numero, 11, stdin);
@@ -68,29 +73,36 @@ ERROS criar(Contato contatos_pessoais[], Contato contatos_trabalho[],int *pos_pe
     do {
       printf("Entre com o email do contato de trabalho: ");
       fgets(contatos_trabalho[*pos_trabalho].email, 100, stdin);
-      contatos_trabalho[*pos_trabalho].email[strcspn(contatos_trabalho[*pos_trabalho].email, "\n")] = '\0';
+      contatos_trabalho[*pos_trabalho]
+          .email[strcspn(contatos_trabalho[*pos_trabalho].email, "\n")] = '\0';
 
     } while (!validar_email(contatos_trabalho[*pos_trabalho].email));
     (*pos_trabalho)++;
   } else {
     return TIPO_INVALIDO;
   }
-  for (int i = 0; i < *pos_pessoais; i++) {
+  for (int i = 0; i < *pos_pessoais - 1; i++) {
+    printf("Comparando %s com %s\n", contatos_pessoais[i].numero,
+           contatos_pessoais[*pos_pessoais - 1].numero);
     if (strcmp(contatos_pessoais[i].numero,
-               contatos_pessoais[*pos_pessoais - 1].numero) == 0) {
+               contatos_pessoais[pos_pessoais - 1].numero) == 0) {
       return NUMERO_EXISTENTE;
     }
   }
-  for (int i = 0; i < *pos_trabalho; i++) {
-    if (strcmp(contatos_trabalho[i].numero,
-               contatos_pessoais[*pos_pessoais - 1].numero) == 0) {
+  for (int i = 0; i < *pos_pessoais - 1; i++) {
+    printf("Comparando %s com %s\n", contatos_trabalho[i].numero,
+           contatos_trabalho[*pos_trabalho - 1].numero);
+    if (strcmp(contatos_pessoais[i].numero,
+               contatos_trabalho[*pos_trabalho - 1].numero) == 0) {
       return NUMERO_EXISTENTE;
     }
   }
+
   return OK;
 }
 
-ERROS deletar(Contato contatos_pessoais[], Contato contatos_trabalho[],int *pos_pessoais, int *pos_trabalho) {
+ERROS deletar(Contato contatos_pessoais[], Contato contatos_trabalho[],
+              int *pos_pessoais, int *pos_trabalho) {
 
   char numero_deletar[11];
 
@@ -123,7 +135,8 @@ ERROS deletar(Contato contatos_pessoais[], Contato contatos_trabalho[],int *pos_
   return NAO_ENCONTRADO;
 }
 
-ERROS listar(Contato contatos_pessoais[], Contato contatos_trabalho[],int *pos_pessoais, int *pos_trabalho) {
+ERROS listar(Contato contatos_pessoais[], Contato contatos_trabalho[],
+             int *pos_pessoais, int *pos_trabalho) {
   if (pos_pessoais == 0 && pos_trabalho == 0)
     return SEM_CONTATOS;
 
@@ -143,7 +156,8 @@ ERROS listar(Contato contatos_pessoais[], Contato contatos_trabalho[],int *pos_p
   return OK;
 }
 
-ERROS alterar(Contato contatos_pessoais[], Contato contatos_trabalho[], int *pos_pessoais, int *pos_trabalho) {
+ERROS alterar(Contato contatos_pessoais[], Contato contatos_trabalho[],
+              int *pos_pessoais, int *pos_trabalho) {
   char numero_alterar[11];
 
   printf("Entre com o numero do contato a ser alterado: ");
@@ -157,23 +171,27 @@ ERROS alterar(Contato contatos_pessoais[], Contato contatos_trabalho[], int *pos
   tipo_contato[strcspn(tipo_contato, "\n")] = '\0';
 
   if (strcmp(tipo_contato, "pessoal") == 0) {
-    
+
     for (int i = 0; i < *pos_pessoais; i++) {
-      
+
       if (strcmp(contatos_pessoais[i].numero, numero_alterar) == 0) {
         printf("Entre com o novo nome do contato pessoal: ");
         fgets(contatos_pessoais[i].nome, 100, stdin);
-        contatos_pessoais[i].nome[strcspn(contatos_pessoais[i].nome, "\n")] = '\0';
-        
+        contatos_pessoais[i].nome[strcspn(contatos_pessoais[i].nome, "\n")] =
+            '\0';
+
         do {
-          printf("Entre com o novo numero do contato pessoal (até 11 digitos): ");
+          printf(
+              "Entre com o novo numero do contato pessoal (até 11 digitos): ");
           fgets(contatos_pessoais[i].numero, 11, stdin);
-          contatos_pessoais[i].numero[strcspn(contatos_pessoais[i].numero, "\n")] = '\0';
+          contatos_pessoais[i]
+              .numero[strcspn(contatos_pessoais[i].numero, "\n")] = '\0';
         } while (!validar_numero(contatos_pessoais[i].numero));
         do {
           printf("Entre com o novo email do contato pessoal: ");
           fgets(contatos_pessoais[i].email, 100, stdin);
-          contatos_pessoais[i].email[strcspn(contatos_pessoais[i].email, "\n")] = '\0';
+          contatos_pessoais[i]
+              .email[strcspn(contatos_pessoais[i].email, "\n")] = '\0';
         } while (!validar_email(contatos_pessoais[i].email));
         return OK;
       }
@@ -184,35 +202,39 @@ ERROS alterar(Contato contatos_pessoais[], Contato contatos_trabalho[], int *pos
 
         printf("Entre com o novo nome do contato de trabalho: ");
         fgets(contatos_trabalho[i].nome, 100, stdin);
-        contatos_trabalho[i].nome[strcspn(contatos_trabalho[i].nome, "\n")] = '\0';
+        contatos_trabalho[i].nome[strcspn(contatos_trabalho[i].nome, "\n")] =
+            '\0';
 
         do {
 
-          printf("Entre com o novo numero do contato de trabalho (até 11 digitos): ");
+          printf("Entre com o novo numero do contato de trabalho (até 11 "
+                 "digitos): ");
           fgets(contatos_trabalho[i].numero, 11, stdin);
-          contatos_trabalho[i].numero[strcspn(contatos_trabalho[i].numero, "\n")] = '\0';
+          contatos_trabalho[i]
+              .numero[strcspn(contatos_trabalho[i].numero, "\n")] = '\0';
 
         } while (!validar_numero(contatos_trabalho[i].numero));
         do {
 
           printf("Entre com o novo email do contato de trabalho: ");
           fgets(contatos_trabalho[i].email, 100, stdin);
-          contatos_trabalho[i].email[strcspn(contatos_trabalho[i].email, "\n")] = '\0';
+          contatos_trabalho[i]
+              .email[strcspn(contatos_trabalho[i].email, "\n")] = '\0';
 
         } while (!validar_email(contatos_trabalho[i].email));
         return OK;
       }
     }
-      for (int i = 0; i < *pos_pessoais; i++) {
-          if (strcmp(contatos_pessoais[i].numero, numero_alterar) == 0) {
-              return NUMERO_EXISTENTE;
-          }
+    for (int i = 0; i < *pos_pessoais; i++) {
+      if (strcmp(contatos_pessoais[i].numero, numero_alterar) == 0) {
+        return NUMERO_EXISTENTE;
       }
-      for (int i = 0; i < *pos_trabalho; i++) {
-          if (strcmp(contatos_trabalho[i].numero, numero_alterar) == 0) {
-              return NUMERO_EXISTENTE;
-          }
+    }
+    for (int i = 0; i < *pos_trabalho; i++) {
+      if (strcmp(contatos_trabalho[i].numero, numero_alterar) == 0) {
+        return NUMERO_EXISTENTE;
       }
+    }
   } else {
     return TIPO_INVALIDO;
   }
@@ -220,36 +242,49 @@ ERROS alterar(Contato contatos_pessoais[], Contato contatos_trabalho[], int *pos
 }
 
 ERROS salvar(Contato contatos_pessoais[], Contato contatos_trabalho[], int *pos_pessoais, int *pos_trabalho) {
-    FILE *f = fopen("contatos.bin", "wb");
-    if (f == NULL)
-        return ABRIR;
-    int qtd = fwrite(contatos_pessoais, *pos_pessoais, sizeof(Contato), f); 
-    if (qtd == 0)
-        return ESCREVER;
-    qtd = fwrite(contatos_trabalho, *pos_trabalho, sizeof(Contato), f); 
-    if (qtd == 0)
-        return ESCREVER;
-    if (fclose(f))
-        return FECHAR;
-    return OK;
+  FILE *f = fopen("contatos.bin", "wb");
+  
+  if (f == NULL)
+    return ABRIR;
+  
+  int qtdp = fwrite(contatos_pessoais, TOTAL, sizeof(Contato), f);
+  qtdp = fwrite(pos_pessoais, 1, sizeof(int), f);
+  
+  int qtdt = fwrite(contatos_trabalho, TOTAL, sizeof(Contato), f);
+  qtdt = fwrite(pos_trabalho, 1, sizeof(int), f);
+ 
+  if (qtdp == 0 && qtdt == 0)
+    return LER;
+  
+  if (fclose(f))
+    return FECHAR;
+  
+  return OK;
 }
-ERROS carregar(Contato contatos_pessoais[], Contato contatos_trabalho[], int *pos_pessoais, int *pos_trabalho) {
-    FILE *f = fopen("contatos.bin", "rb");
-    if (f == NULL)
-        return ABRIR;
 
-    int qtd = fread(contatos_pessoais, *pos_pessoais, sizeof(Contato), f); 
-    if (qtd == 0)
-        return LER;
-    qtd = fread(contatos_trabalho, *pos_trabalho, sizeof(Contato), f); 
-        return LER;
-    if (fclose(f))
-        return FECHAR;
-    return OK;
+ERROS carregar(Contato contatos_pessoais[], Contato contatos_trabalho[], int *pos_pessoais, int *pos_trabalho) {
+  FILE *f = fopen("contatos.bin", "rb");
+  
+  if (f == NULL)
+    return ABRIR;
+
+  int qtdp = fread(contatos_pessoais, TOTAL, sizeof(Contato), f);
+  qtdp = fread(pos_pessoais, 1, sizeof(int), f);
+
+  int qtdt = fread(contatos_trabalho, TOTAL, sizeof(Contato), f);
+  qtdt = fread(pos_trabalho, 1, sizeof(int), f);
+
+  if (qtdp == 0 && qtdt == 0)
+    return LER;
+
+  if (fclose(f))
+    return FECHAR;
+  
+  return OK;
 }
 
 void clearBuffer() {
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF) {
-    }
+  int c;
+  while ((c = getchar()) != '\n' && c != EOF) {
+  }
 }
