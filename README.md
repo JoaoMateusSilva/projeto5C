@@ -40,3 +40,12 @@
 
   <h2>Conclusão</h2>
     <p>Estas novas funcionalidades tornam o sistema de gerenciamento de contatos mais robusto e fácil de usar, garantindo a integridade dos dados e oferecendo uma melhor organização dos contatos pessoais e profissionais.</p>
+    <h2> Como compilar e executar </h2>
+<h4>Para compilar o programa em C, é necessário ter um compilador C instalado, como o GCC (GNU Compiler Collection) ou entrar em um ambiente de desenvolvimento integrado online, como exemplo, o Replit. Após isso, você pode compilar o programa da seguinte forma:</h4>
+
+<ul>
+        <li>Primeiro: abra o terminal.</li> 
+        <li>Segundo: use o comando gcc -c main.c -o main.o e o comando gcc -c contatos.c -o contatos.o . </li> 
+        <li>Terceiro: use o comando gcc main.o contatos.o -o exec. Onde "exec" é o nome que você deseja dar ao arquivo executável e main.c e contatos.c são os nomes dos arquivos desse programa.</li> 
+        <li>Por fim: para executar o programa compilado basta digitar ./exec, no caso desse ser o nome do seu arquivo executável. </li> 
+</ul>
