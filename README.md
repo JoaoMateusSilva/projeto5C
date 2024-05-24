@@ -2,8 +2,8 @@
 <h3>projeto 5 da aula de algoritmo escrito em C</h3>
 
 <h4>Heron de Souza 22.223.009-6</h4>
-<h4></h4>João Mateus E B da Silva 22.223.013-8</h4>
-<h4></h4>Rafael Denis Alonso 22.223.016-1</h4>
+<h4>João Mateus E B da Silva 22.223.013-8</h4>
+<h4>Rafael Denis Alonso 22.223.016-1</h4>
 
 <h2>Descrição Geral</h2>
     <p>Este projeto é um sistema de gerenciamento de contatos desenvolvido em C. Ele permite adicionar, listar, deletar, salvar e carregar contatos a partir de arquivos binários. O sistema agora possui novas funcionalidades que aprimoram a usabilidade e integridade dos dados.</p>
